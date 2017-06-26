@@ -53,8 +53,8 @@ const defaultOpts = {
       <ng-template #defaultTemplate let-attrs="attrs">
           <span [innerHTML]='(attrs.labelAttribute ? attrs.data[attrs.labelAttribute] : attrs.data) | boldprefix:attrs.keyword'></span>
       </ng-template>
-      <ul *ngIf="suggestions.length > 0 && showList" (tap)="listClick($event)">
-          <li *ngFor="let suggestion of suggestions" (tap)="select(suggestion, $event)">
+      <ul *ngIf="suggestions.length > 0 && showList">
+          <li *ngFor="let suggestion of suggestions" (tap)="select(suggestion)">
               <ng-template
                       [ngTemplateOutlet]="template || defaultTemplate"
                       [ngOutletContext]="
@@ -154,7 +154,7 @@ export class AutoCompleteComponent {
    * select item from list
    * @param item
    */
-  public select(selection: any, event): void {
+  public select(selection: any): void {
     this.keyword = this.dataProvider.labelAttribute == null || selection[this.dataProvider.labelAttribute] == null
         ? selection : selection[this.dataProvider.labelAttribute];
     
@@ -164,7 +164,6 @@ export class AutoCompleteComponent {
 
     // emit selection event
     this.itemSelected.emit(selection);
-    event.stopPropagation();
   }
 
   /**
@@ -206,12 +205,7 @@ export class AutoCompleteComponent {
         ||
         (!this.inputElem && this.inputElem._elementRef.nativeElement.contains(event.target))
     ) {
-      this.hideItemList();
-      event.stopPropagation();
+      //this.hideItemList();
     }
-  }
-
-  listClick(event){
-    event.stopPropagation();
   }
 }
