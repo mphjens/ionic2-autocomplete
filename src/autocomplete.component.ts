@@ -53,7 +53,7 @@ const defaultOpts = {
       <ng-template #defaultTemplate let-attrs="attrs">
           <span [innerHTML]='(attrs.labelAttribute ? attrs.data[attrs.labelAttribute] : attrs.data) | boldprefix:attrs.keyword'></span>
       </ng-template>
-      <ul *ngIf="suggestions.length > 0 && showList">
+      <ul *ngIf="suggestions.length > 0 && showList" (click)="listClick($event)>
           <li *ngFor="let suggestion of suggestions" (tap)="select(suggestion)">
               <ng-template
                       [ngTemplateOutlet]="template || defaultTemplate"
@@ -206,6 +206,7 @@ export class AutoCompleteComponent {
         (!this.inputElem && this.inputElem._elementRef.nativeElement.contains(event.target))
     ) {
       this.hideItemList();
+      event.preventDefault();
     }
   }
 }
