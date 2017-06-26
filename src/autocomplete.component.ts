@@ -53,6 +53,12 @@ const defaultOpts = {
       <ng-template #defaultTemplate let-attrs="attrs">
           <span [innerHTML]='(attrs.labelAttribute ? attrs.data[attrs.labelAttribute] : attrs.data) | boldprefix:attrs.keyword'></span>
       </ng-template>
+      <div class='suggestion-list-wrapper'>
+      <div class='tap-blocker' style="
+          width: 100%;
+          height: 100%;
+          position: absolute;
+      "></div>
       <ul *ngIf="suggestions.length > 0 && showList">
           <li *ngFor="let suggestion of suggestions" (tap)="select(suggestion)">
               <ng-template
@@ -61,6 +67,7 @@ const defaultOpts = {
                         {attrs:{ data: suggestion, keyword: keyword, labelAttribute: dataProvider.labelAttribute }}"></ng-template>
           </li>
       </ul>
+      </div>
       <p *ngIf="suggestions.length == 0 && showList && options.noItems">{{ options.noItems }}</p>
   `,
   selector      : 'ion-auto-complete'
